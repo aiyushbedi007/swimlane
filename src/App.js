@@ -17,13 +17,13 @@ function App() {
     setIsModalOpen(true);
   };
 
-  const handleModalSubmit = (data, reason) => {
+  const handleModalSubmit = (reason) => {
     const updatedBlocks = blocks.map(block => {
       if (block.id === selectedBlock.id) {
         const newBlock = { 
           ...block, 
           state: selectedBlock.newState, 
-          history: [...block.history, block.state] 
+          history: [...block.history, { state: block.state, reason }] 
         };
         return newBlock;
       }

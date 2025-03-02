@@ -10,8 +10,8 @@ const BlockPreviewModal = ({ block, onClose }) => {
         <h3>Current State: {block.state}</h3>
         <h4>History:</h4>
         <ul>
-          {block.history.map((state, index) => (
-            <li key={index}>{state}</li>
+          {block.history.map((entry, index) => (
+            <li key={index}>{`State: ${entry.state}, Reason: ${entry.reason}`}</li>
           ))}
         </ul>
       </div>
