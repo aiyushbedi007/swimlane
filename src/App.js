@@ -1,23 +1,49 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Swimlane from './Swimlane';
+import BlockTransitionModal from './BlockTransitionModal';
 
 function App() {
+  const [blocks, setBlocks] = useState([
+    { id: 1, title: 'Block 1', state: 'To Do', history: [] },
+    { id: 2, title: 'Block 2', state: 'In Progress', history: [] },
+    { id: 3, title: 'Block 3', state: 'Done', history: [] },
+  ]);
+  const [selectedBlock, setSelectedBlock] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleBlockMove = (id, newState) => {
+    setSelectedBlock({ id, newState });
+    setIsModalOpen(true);
+  };
+
+  const handleModalSubmit = (data, reason) => {
+    const updatedBlocks = blocks.map(block => {
+      if (block.id === selectedBlock.id) {
+        const newBlock = { 
+          ...block, 
+          state: selectedBlock.newState, 
+          history: [...block.history, block.state] 
+        };
+        return newBlock;
+      }
+      return block;
+    });
+    setBlocks(updatedBlocks);
+    setIsModalOpen(false);
+    setSelectedBlock(null);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Swimlane UI</h1>
+      <Swimlane blocks={blocks} onBlockMove={handleBlockMove} />
+      {isModalOpen && (
+        <BlockTransitionModal 
+          onClose={() => setIsModalOpen(false)} 
+          onSubmit={handleModalSubmit} 
+        />
+      )}
     </div>
   );
 }
