@@ -1,12 +1,22 @@
 .App {
   text-align: center;
   font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+input[type="text"] {
+  width: 300px;
+  padding: 10px;
+  margin: 20px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
 .Swimlane {
   display: flex;
   justify-content: space-around;
-  margin: 20px;
+  margin: 20px 0;
 }
 
 .Lane {
@@ -24,9 +34,10 @@
   padding: 10px;
   cursor: pointer;
   border-radius: 3px;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .Block:hover {
   background-color: #21a1f1;
+  transform: scale(1.02);
 }

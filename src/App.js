@@ -11,6 +11,7 @@ function App() {
   ]);
   const [selectedBlock, setSelectedBlock] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [filter, setFilter] = useState('');
 
   const handleBlockMove = (id, newState) => {
     setSelectedBlock({ id, newState });
@@ -34,10 +35,20 @@ function App() {
     setSelectedBlock(null);
   };
 
+  const filteredBlocks = blocks.filter(block => 
+    block.title.toLowerCase().includes(filter.toLowerCase())
+  );
+
   return (
     <div className="App">
       <h1>Swimlane UI</h1>
-      <Swimlane blocks={blocks} onBlockMove={handleBlockMove} />
+      <input 
+        type="text" 
+        placeholder="Filter blocks by title..." 
+        value={filter} 
+        onChange={(e) => setFilter(e.target.value)} 
+      />
+      <Swimlane blocks={filteredBlocks} onBlockMove={handleBlockMove} />
       {isModalOpen && (
         <BlockTransitionModal 
           onClose={() => setIsModalOpen(false)} 
